@@ -13,9 +13,11 @@ def parse_config():
 
     cnc_host = config.get('cnc').get('listen_host')
     cnc_port = config.get('cnc').get('listen_port')
+    cnc_if_name = config.get('cnc').get('if_name')
 
     return {'agent_host': agent_host,
             'agent_port': agent_port,
             'cnc_host': cnc_host,
             'cnc_port': cnc_port,
+            'cnc_if_name': cnc_if_name,
             }

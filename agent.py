@@ -9,10 +9,8 @@ socksize = 1024
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((config['agent_host'], int(config['agent_port'])))
-print("Server started on port: {}".format(config['agent_port']))
-
 server.listen(1)
-print("Agent started\n")
+print("Agent started on port: {}\nWaiting for connections from CNC...\n".format(config['agent_port']))
 conn, addr = server.accept()
 
 while True:

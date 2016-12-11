@@ -1,11 +1,11 @@
 from cnc import network
 from cnc import time
+import tools
 
-
-if_name = 'wlp3s0'
+config = tools.parse_config()
 
 clock = time.get_current_time()
-segment = network.find_segment(if_name)
+segment = network.find_segment(config['cnc_if_name'])
 gateway = network.get_default_ipv4_gw()
 dns_server = network.get_dns_server()
 
@@ -20,7 +20,6 @@ def print_header(clock ,segment, dns_server,gateway ):
       """)
 
 
-
 def display_main_menu():
     print_header(clock, segment, dns_server, gateway)
     menu = {
@@ -31,9 +30,15 @@ def display_main_menu():
         '5': 'Remove something from all clients',
     }
     for key, value in menu.iteritems():
-        print key, '.', value
-
+        print(key, '.', value)
 
 
 def display_sub_menu():
     pass
+
+
+def dislay_menu(menu_level):
+    if menu_level == 'main':
+        display_main_menu()
+    if menu_level == 'sub':
+        display_sub_menu()

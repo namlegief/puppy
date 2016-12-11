@@ -1,7 +1,7 @@
 import socket
 import struct
+import fcntl
 import re
-
 
 resolvers = []
 
