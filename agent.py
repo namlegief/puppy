@@ -1,21 +1,22 @@
 import sys
 import socket
 import subprocess
+import tools
 
-agent_host = 'localhost'
-agent_port = 4444
+config = tools.parse_config()
+
 socksize = 1024
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind((agent_host, agent_port))
-print("Server started on port: {}".format(agent_port))
+server.bind((config['agent_host'], int(config['agent_port'])))
+print("Server started on port: {}".format(config['agent_port']))
 
 server.listen(1)
 print("Agent started\n")
 conn, addr = server.accept()
 
 while True:
-    print 'New connection from %s:%d' % (addr[0], addr[1])
+    print('New connection from {}:{}'.format(addr[0], addr[1]))
     data = conn.recv(socksize)
     if not data:
         continue
