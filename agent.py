@@ -1,7 +1,8 @@
-import sys
 import socket
 import subprocess
-import tools
+import sys
+
+from cnc import tools
 
 config = tools.parse_config()
 

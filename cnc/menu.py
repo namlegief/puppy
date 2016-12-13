@@ -1,8 +1,9 @@
-from cnc import network
-from cnc import time
 import tools
 
-config = tools.parse_config()
+from cnc import network
+from cnc import time
+
+config = tools.get_bind_settings()
 
 clock = time.get_current_time()
 segment = network.find_segment(config['cnc_if_name'])
@@ -34,7 +35,7 @@ def display_main_menu():
 
 
 def display_sub_menu():
-    pass
+    print("sub menu")
 
 
 def dislay_menu(menu_level):
