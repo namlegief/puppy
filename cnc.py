@@ -11,9 +11,12 @@ def get_user_choice(menu_type):
 
 
 def main():
-    menu_type = 'main'
+    menu.print_header()
     while True:
-        menu_type = get_user_choice(menu_type)
+        menu.dislay_menu('main')
+        user_choice = raw_input("->:\n")
+        router.process_action(user_choice, 'main')
+
 
 
 if __name__ == '__main__':
