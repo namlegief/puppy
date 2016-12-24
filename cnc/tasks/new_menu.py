@@ -1,6 +1,7 @@
 #!/usr/bin/python
 from thread import start_new_thread
 from sys import *
+import time
 
 
 def ShowClients():
@@ -69,4 +70,13 @@ def menu(a):
     choice.get(userChose, NotFound)()
 
 
-start_new_thread(menu, (77,))
+if __name__ == '__main__':
+
+    try:
+        
+        start_new_thread(menu,(77,))
+
+    except Exception, errtxt:
+                print errtxt
+
+    time.sleep(5)
