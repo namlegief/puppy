@@ -36,17 +36,18 @@ def ShellAccess():
 
 def NotFound():
     print "Option not found!"
-    menu(a=1)
+    menu(arg=1)
 
 
 def EnterToMenu():
     try:
         input("Hit Enter to Back Menu..")
     except:
-        menu(a=1)
+        menu(arg=1)
 
 
-def menu(a):
+def menu(arg):
+
     print """
     ################################################################
     #       Python 102          Name: The girl has no name:)       #
@@ -74,9 +75,8 @@ if __name__ == '__main__':
 
     try:
         
-        start_new_thread(menu,(77,))
+        start_new_thread(menu(), ('',))
 
-    except Exception, errtxt:
-                print errtxt
+    except Exception, err:
+                print err
 
-    time.sleep(5)
