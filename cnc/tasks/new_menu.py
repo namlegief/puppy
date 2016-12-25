@@ -46,7 +46,7 @@ def EnterToMenu():
         menu(arg=1)
 
 
-def menu(arg):
+def menu(arg=False):
 
     print """
     ################################################################
