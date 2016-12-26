@@ -3,17 +3,5 @@
     "listen_host": "127.0.0.1",
     "listen_port": "5555",
     "cnc_if_name": "wlp3s0"
-  },
-  "agents": {
-
-    "agent1": {
-      "host": "1.1.1.10",
-      "port": "4444"
-    }
-    ,"agent2": {
-      "host": "1.1.1.11",
-      "port": "4444"
-    }
-
   }
 }
