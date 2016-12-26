@@ -1,10 +1,8 @@
-import tools
 from thread import start_new_thread
 from cnc import network
 from cnc import time
 
 
-config = tools.get_bind_settings()
 
 def ShowClients():
     print 'show'
@@ -50,8 +48,9 @@ def EnterToMenu():
 
 
 def menu(arg=False):
+    nic = 'wlp3s0'
     clock = time.get_current_time()
-    segment = network.find_segment(config['cnc_if_name'])
+    segment = network.find_segment(nic)
     gateway = network.get_default_ipv4_gw()
     dns_server = network.get_dns_server()
 

@@ -12,3 +12,5 @@ def get_bind_settings():
             'cnc_port': config.get('cnc').get('listen_port'),
             'cnc_if_name': str(config.get('cnc').get('cnc_if_name')),
             }
+x=get_bind_settings()
+print x
