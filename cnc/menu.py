@@ -52,20 +52,17 @@ def menu(arg=False):
     clock = time.get_current_time()
     segment = network.find_segment(nic)
     gateway = network.get_default_ipv4_gw()
-    dns_server = network.get_dns_server()
+    dns_server = ', '.join(network.get_dns_server())
 
     print ("################################################################################")
     print ("  Python 102          Name: Alex & Jenia                  Time: {0} ".format(clock))
     print ("################################################################################")
-    print (" Segment:{0}\n DNS:{1} \n Gateway:{2}\n ".format(segment, dns_server, gateway))
+    print (" Segment:{0}\n DNS:{1} \n Gateway:{2} ".format(segment, dns_server, gateway))
     print ("################################################")
     print ("""              Menu
-                  ----
+              ----
           """)
     print """
-        ################################################################
-        #       Python 102          Name: The girl has no name:)       #
-        ################################################################
         1) Show clients
         2) Send commands
         3) File Transfer
@@ -73,7 +70,7 @@ def menu(arg=False):
         5) Remove
         6) Shell on a client """
 
-    userChose = raw_input("Choose Options -> ")
+    userChose = raw_input("\t    Choose Options -> ")
     choice = {
         "1": ShowClients,
         "2": SendCommand,
