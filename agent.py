@@ -19,13 +19,9 @@ def get_platform():
         exitapp()
 
 buffer_size = 4096
-
 host = '127.0.0.1'
-
 port = 1234
-
 sock = socket(AF_INET, SOCK_STREAM)
-
 sock.settimeout(5)
 
 try:

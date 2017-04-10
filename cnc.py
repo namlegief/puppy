@@ -82,7 +82,7 @@ def SendCommand():
 
                 print(i[1], " success")
 
-                get_time.sleep(1)
+                sleep(1)
 
                 print(i[0].recv(buffer_size))
 
@@ -142,7 +142,7 @@ def SendFile():
 
                 break
 
-            time.sleep(1)
+            sleep(1)
 
             i[0].send(destination)
 
@@ -175,7 +175,7 @@ def SendFile():
 
             return
 
-        time.sleep(1)
+        sleep(1)
 
         connections[inp - 1][0].send(destination)
 
@@ -190,7 +190,7 @@ def SendFile():
 
         f.close()
 
-        time.sleep(1)
+        sleep(1)
 
         connections[inp - 1][0].send("E")
 
@@ -224,7 +224,7 @@ def InstallAndRemove(TypeAction):
 
                 break
 
-            time.sleep(1)
+            sleep(1)
 
             i[0].send(actioncmd)
 
@@ -244,7 +244,7 @@ def InstallAndRemove(TypeAction):
 
             return
 
-        time.sleep(1)
+        sleep(1)
 
         connections[inp - 1][0].send(actioncmd)
 
@@ -283,7 +283,9 @@ def ShellAcsess():
 
             return
 
-    time.sleep(1)
+    sleep(1)
+
+    EnterToMenu()
 
 
 def NotFound():
@@ -295,21 +297,20 @@ def NotFound():
 def EnterToMenu():
 
     try:
-
         input("Hit Enter to Back Menu..")
-
+        fail
     except:
+        menu(1)
 
-        menu(a=1)
 
+nic = 'wlp3s0'
+clock = get_time.get_current_time()
+segment = network.find_segment(nic)
+gateway = network.get_default_ipv4_gw()
+dns_server = ', '.join(network.get_dns_server())
 
 def menu(a):
     system("clear")
-    nic = 'wlp3s0'
-    clock = get_time.get_current_time()
-    segment = network.find_segment(nic)
-    gateway = network.get_default_ipv4_gw()
-    dns_server = ', '.join(network.get_dns_server())
 
     print ("################################################################################")
     print ("  Python 102          Name: Alex & Jenia                  Time: {0} ".format(clock))
