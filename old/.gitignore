@@ -1,44 +1,3 @@
-# Created by .ignore support plugin (hsz.mobi)
-### Qt template
-# C++ objects and libs
-
-*.slo
-*.lo
-*.o
-*.a
-*.la
-*.lai
-*.so
-*.dll
-*.dylib
-
-# Qt-es
-
-/.qmake.cache
-/.qmake.stash
-*.pro.user
-*.pro.user.*
-*.qbs.user
-*.qbs.user.*
-*.moc
-moc_*.cpp
-qrc_*.cpp
-ui_*.h
-Makefile*
-*build-*
-
-# QtCreator
-
-*.autosave
-
-# QtCtreator Qml
-*.qmlproject.user
-*.qmlproject.user.*
-
-# QtCtreator CMake
-CMakeLists.txt.user*
-
-### Python template
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -49,6 +8,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+.idea
 env/
 build/
 develop-eggs/
@@ -107,7 +67,7 @@ docs/_build/
 # PyBuilder
 target/
 
-# Jupyter Notebook
+# IPython Notebook
 .ipynb_checkpoints
 
 # pyenv
@@ -120,7 +80,6 @@ celerybeat-schedule
 .env
 
 # virtualenv
-.venv/
 venv/
 ENV/
 
@@ -129,4 +88,3 @@ ENV/
 
 # Rope project settings
 .ropeproject
-

@@ -1,12 +1,10 @@
-#!/usr/bin/python
+#!/usr/bin/env python
+
+
 from socket import socket, AF_INET, SOCK_STREAM, error
-
 from subprocess import Popen, PIPE
-
 from sys import platform
-
 from time import sleep
-
 from sys import exit as exitapp
 
 

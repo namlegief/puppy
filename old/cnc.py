@@ -1,47 +1,44 @@
 #!/usr/bin/python
+
 from socket import socket, AF_INET, SOCK_STREAM, SOL_SOCKET, SO_REUSEADDR, gethostbyaddr, error
-
 from thread import start_new_thread
-
 from os import system
-
 import get_time
-
 from time import sleep
-
 import network
-
+import sys
 from sys import exit as exitapp
+from PyQt4 import QtGui, QtCore, QtNetwork
+
+app = QtGui.QApplication(sys.argv)
+widget = QtGui.QWidget()
+widget.resize(250, 150)
+widget.setWindowTitle('simple')
+widget.show()
 
 host = ''
-
 port = 1234
-
 buffer_size = 4096
-
 connections = []
-
 max_connections = 5
 
-sock = socket(AF_INET, SOCK_STREAM)
-
-sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+# sock = socket(AF_INET, SOCK_STREAM)
+sock = QtNetwork.QTcpSocket()
+# sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
 
 try:
 
-    sock.bind((host, port))
+    sock.bind(host, port)
 
 except error as msg:
 
     # debug level
-
     # print 'Bind failed. Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
-
     print "Socket Error: %s" % msg
-
     exitapp()
 
-sock.listen(max_connections)
+
+#sock.listen(max_connections)
 
 
 def GetConnections():
@@ -313,7 +310,7 @@ def menu(a):
     system("clear")
 
     print ("################################################################################")
-    print ("  Python 102          Name: Alex & Jenia                  Time: {0} ".format(clock))
+    print ("     {0} ".format(clock))
     print ("################################################################################")
     print (" Segment:{0}\n DNS:{1} \n Gateway:{2} ".format(segment, dns_server, gateway))
     print ("################################################")
@@ -322,7 +319,7 @@ def menu(a):
         1) Show clients
         2) Send commands
         3) File Transfer
-        4) Installion
+        4) Installation
         5) Remove
         6) Shell on a client """
            )
@@ -330,19 +327,12 @@ def menu(a):
     user_chose = raw_input("Chose Options -> ")
 
     choice = {
-
         "1": ShowClients,
-
         "2": SendCommand,
-
         "3": SendFile,
-
         "4": lambda: InstallAndRemove(TypeAction="install"),
-
         "5": lambda: InstallAndRemove(TypeAction="remove"),
-
         "6": ShellAcsess
-
     }
 
     choice.get(user_chose, NotFound)()
@@ -351,8 +341,11 @@ def menu(a):
 start_new_thread(menu, (1,))
 
 while True:
-    conn, addr = sock.accept()
+    #conn, addr = sock.accept()
 
-    connections.append([conn, addr])
+    # connections.append([conn, addr])
+    pass
 
 sock.close()
+
+# sys.exit(app.exec_())

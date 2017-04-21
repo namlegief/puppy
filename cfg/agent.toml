@@ -1,0 +1,9 @@
+[logging]
+# Logging level options: info, debug
+log_level = "debug"
+
+# This setting will work for debug mode only (values: filename):
+log_file = "agent.log"
+# This setting will work for any but debug level (values: syslog, LogStash):
+log_service = "syslog"
+
