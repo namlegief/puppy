@@ -131,3 +131,5 @@ ENV/
 # Rope project settings
 .ropeproject
 
+!/lib/config.py
+!/lib/log.py
