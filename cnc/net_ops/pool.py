@@ -19,10 +19,12 @@ def start_server(threadName, log):
     connection.bind((BIND_INTERFACE, BIND_PORT))
     connection.listen(10)
 
+    i = 0
     while True:
         current_connection, address = connection.accept()
-        log.debug('Arrived new connection from: {}'.format(str(address)))
-        connections_pool[address[0]] = current_connection
+        log.debug('Arrived new connection from: {}'.format(address[0]))
+        connections_pool[address[0]] = {i: current_connection}
+        i += 1
 
 
 def clean_pool(threadName, log):

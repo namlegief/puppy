@@ -1,15 +1,14 @@
-import sys
 from PyQt4.QtGui import *
 from PyQt4.QtCore import QTimer
-
-# sys.path.insert(1, '..')
 from net_ops.pool import get_connections_pool
 
+connections_map = {}
 
 class ShowClnt(QTableWidget):
     def __init__(self, parent=None):
         super(ShowClnt, self).__init__(parent)
         # self.setWindowFlags(Qt.WindowStaysOnTopHint)
+        self.cellActivated.connect(self.handleCellActivated)
 
         font = self.font()
         font.setPointSize(12)
@@ -23,7 +22,13 @@ class ShowClnt(QTableWidget):
 
         self.setRowCount(len(curr_agents))
 
+        i = 0
         for conn in curr_agents.items():
-            self.setItem(0, 0, QTableWidgetItem(conn[0]))
+            self.setItem(i, 0, QTableWidgetItem(conn[0]))
+            connections_map[i] = conn[0]
+            i += 1
 
         QTimer.singleShot(3000, self.get_agents)
+
+    def handleCellActivated(self, row, column):
+        print row, column
