@@ -17,8 +17,6 @@ class ShowClnt(QTableWidget):
         self.setHorizontalHeaderLabels(str(QString("Agent IP")))
         self.setSelectionMode(QAbstractItemView.MultiSelection)
 
-        self.cellClicked.connect(self.showIndex)
-
 
     def get_agents(self):
         curr_agents = get_connections_pool()
@@ -33,9 +31,10 @@ class ShowClnt(QTableWidget):
 
         QTimer.singleShot(3000, self.get_agents)
 
-    def showIndex(self, row, column):
+    def getSelectedAgents(self):
 
-        a = self.selectedIndexes()
-        for address in a:
-            print connections_map[address.row()]
-        pass
+        items_list = self.selectedIndexes()
+        agents_list = []
+        for selected_item in items_list:
+            agents_list.append(connections_map[selected_item.row()])
+        return agents_list
