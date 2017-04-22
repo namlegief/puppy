@@ -1,24 +1,64 @@
 import sys
-from PyQt4 import QtGui
+from PyQt4.QtCore import QModelIndex
+from PyQt4.QtGui import *
 
 
-class Window(QtGui.QWidget):
-    def __init__(self):
-        QtGui.QWidget.__init__(self)
-        layout = QtGui.QVBoxLayout(self)
-        self.button = QtGui.QPushButton('Test')
-        self.edit = QtGui.QTextEdit()
-        layout.addWidget(self.edit)
-        layout.addWidget(self.button)
-        self.button.clicked.connect(self.handleTest)
+class Window(QMainWindow):
+    def __init__(self, parent=None):
 
-    def handleTest(self):
-        self.edit.append('spam: spam spam spam spam{0}'.format(tst))
+        QMainWindow.__init__(self, parent)
+
+        self.model = QStandardItemModel(8, 4)
+        table = QTableView()
+        table.setModel(self.model)
+
+        actionMenu = QMenu(self.tr("&Actions"), self)
+        fillAction = actionMenu.addAction(self.tr("&Fill Selection"))
+        clearAction = actionMenu.addAction(self.tr("&Clear Selection"))
+        selectAllAction = actionMenu.addAction(self.tr("&Select All"))
+        self.menuBar().addMenu(actionMenu)
+
+        fillAction.triggered.connect(self.fillSelection)
+        clearAction.triggered.connect(self.clearSelection)
+        selectAllAction.triggered.connect(self.selectAll)
+
+        self.selectionModel = table.selectionModel()
+
+        self.statusBar()
+        self.setCentralWidget(table)
+
+        self.setWindowTitle(self.tr("Selected Items in a Table Model"))
+
+    def fillSelection(self):
+
+        indexes = self.selectionModel.selectedIndexes()
+
+        for index in indexes:
+            text = u"(%i,%i)" % (index.row(), index.column())
+            self.model.setData(index, text)
+
+    def clearSelection(self):
+
+        indexes = self.selectionModel.selectedIndexes()
+
+        for index in indexes:
+            self.model.setData(index, "")
+
+    def selectAll(self):
+
+        parent = QModelIndex()
+
+        topLeft = self.model.index(0, 0, parent)
+        bottomRight = self.model.index(
+            self.model.rowCount(parent) - 1,
+            self.model.columnCount(parent) - 1, parent)
+
+        selection = QItemSelection(topLeft, bottomRight)
+        self.selectionModel.select(selection, QItemSelectionModel.Select)
 
 
-if __name__ == '__main__':
-    tst = '123'
-    app = QtGui.QApplication(sys.argv)
-    win = Window()
-    win.show()
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = Window()
+    window.show()
     sys.exit(app.exec_())
